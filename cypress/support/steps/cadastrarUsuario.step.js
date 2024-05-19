@@ -62,13 +62,20 @@ When("informo um email ja cadastrado", function () {
   regisUser.typeEmail(fakerPT_BR.internet.email());
 });
 
-Then(
-  "o usuário será registrado com mensagem de cadastro com sucesso",
-  function () {
-    cy.wait("@post");
-    cy.get(regisUser.msgSucesso).contains("Cadastro realizado!");
-  }
-);
+When("concluo o cadastro com sucesso", function () {
+  regisUser.registrarUsuario();
+});
+
+Then("o usuário será registrado com sucesso como tipo comum", function () {
+  cy.wait("@post").then(function (intercept) {
+    type = intercept.response.body.type;
+    cy.wrap(type).should("eq", 0);
+  });
+});
+
+Then("o site exibirá uma mensagem de cadastro com sucesso", function () {
+  cy.get(regisUser.msgSucesso).contains("Cadastro realizado!");
+});
 
 Then(
   "o site verifica que o campo Nome está limpo alertando para informar o nome",
@@ -161,4 +168,21 @@ Then("o botao Ok deve retornar para o formulário", function () {
   cy.get(regisUser.campoForms).eq(1).should("be.visible");
   cy.get(regisUser.campoForms).eq(2).should("be.visible");
   cy.get(regisUser.campoForms).eq(3).should("be.visible");
+});
+
+Then(
+  "a operação de registro não poderá ser concluída alertando quantidade máxima da senha",
+  function () {
+    cy.get(regisUser.msgErro)
+      .eq(0)
+      .contains("A senha deve ter no máximo 12 dígitos.");
+    cy.get(regisUser.msgErro)
+      .eq(1)
+      .contains("A senha deve ter no máximo 12 dígitos.");
+  }
+);
+
+Then("o usuario está automaticamente logado no site", function () {
+  cy.wait("@auth");
+  cy.get(regisUser.perfil).contains("Perfil");
 });

@@ -1,3 +1,4 @@
+import { fakerPT_BR } from "@faker-js/faker";
 export default class CadastroPage {
   inputNome = "[placeholder='Nome']";
   inputEmail = "[placeholder='E-mail']";
@@ -12,6 +13,8 @@ export default class CadastroPage {
   msgFalhaCadastro = ".modal-body";
   mcsgErroCadastro = ".error-message";
   campoForms = ".input-container";
+
+  perfil = ".movies-page-link";
 
   typeNome(nome) {
     cy.get(this.inputNome).type(nome);
@@ -46,6 +49,23 @@ export default class CadastroPage {
   }
 
   clickOk() {
+    cy.get(this.buttonOk).click();
+  }
+
+  registrarUsuario() {
+    cy.intercept(
+      "POST",
+      "https://raromdb-3c39614e42d4.herokuapp.com/api/users"
+    );
+    cy.get(this.inputNome).type("Caroline Maia");
+    cy.get(this.inputEmail).type(fakerPT_BR.internet.email());
+    cy.get(this.inputSenha).type("123456");
+    cy.get(this.inputConfirmarSenha).type("123456");
+    cy.intercept(
+      "POST",
+      "https://raromdb-3c39614e42d4.herokuapp.com/api/auth/login"
+    ).as("auth");
+    cy.get(this.buttonCadastrar).click();
     cy.get(this.buttonOk).click();
   }
 }
