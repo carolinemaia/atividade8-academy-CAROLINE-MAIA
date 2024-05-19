@@ -26,6 +26,10 @@ When("confirmo a senha informada", function () {
   regisUser.typeConfirmarSenha();
 });
 
+When("informo um email com formato inválido {string}", function (email) {
+  regisUser.typeEmail(email);
+});
+
 When("confirmo a operação", function () {
   cy.intercept(
     "POST",
@@ -76,3 +80,10 @@ Then(
     cy.get(regisUser.msgErro).contains("Informe a senha");
   }
 );
+
+Then("a operação de registro não poderá ser concluída", function () {
+  cy.get(regisUser.msgFalhaCadastro).contains("Falha no cadastro.");
+  cy.get(regisUser.mcsgErroCadastro).contains(
+    "Não foi possível cadastrar o usuário."
+  );
+});

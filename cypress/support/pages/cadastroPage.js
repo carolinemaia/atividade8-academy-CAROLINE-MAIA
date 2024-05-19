@@ -8,6 +8,8 @@ export default class CadastroPage {
 
   msgSucesso = "div.modal-body";
   msgErro = ".input-error";
+  msgFalhaCadastro = ".modal-body";
+  mcsgErroCadastro = ".error-message";
 
   typeNome(nome) {
     cy.get(this.inputNome).type(nome);

@@ -40,6 +40,20 @@ Funcionalidade: Cadastrar novo usuário
         E confirmo a operação
         Entao o site verifica que o campo Confirmar senha está limpo alertando para informar a senha
 
-    
+    Esquema do Cenário: Nao deve ser possível registrar um usuário com e-mail inválido
+        Quando informo um Nome
+        E informo um email com formato inválido "<email>"
+        E informo uma senha válida
+        E confirmo a senha informada
+        E confirmo a operação
+        Entao a operação de registro não poderá ser concluída
+        Exemplos:
+        |          email       |    
+        |           c          |                                         
+        |          @.com       |                       
+        |           123        |                                  
+        |       carolail.com   |
+        |   caromaia#gmail.com |   
+
 
 
