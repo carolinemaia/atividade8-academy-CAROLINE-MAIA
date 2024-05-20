@@ -1,4 +1,5 @@
 import { fakerPT_BR } from "@faker-js/faker";
+
 export default class CadastroPage {
   inputNome = "[placeholder='Nome']";
   inputEmail = "[placeholder='E-mail']";
