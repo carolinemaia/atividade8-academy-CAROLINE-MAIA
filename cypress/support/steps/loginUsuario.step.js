@@ -43,6 +43,14 @@ When("informo e-mail nao cadastrado", function () {
   cy.get(loginUser.inputEmail).type("essemmailcomcertezanaoexiste123@hot.com");
 });
 
+When("não informo e-mail", function () {
+  cy.get(loginUser.inputEmail).invoke("val").should("be.empty");
+});
+
+When("não informo senha", function () {
+  cy.get(loginUser.inputSenha).invoke("val").should("be.empty");
+});
+
 Then("consigo autenticar com sucesso no site", function () {
   cy.wait("@auth").then(function (intercept) {
     expect(intercept.response.statusCode).to.equal(200);
@@ -65,5 +73,30 @@ Then(
     cy.get(loginUser.msgUsuarioInvalido).contains(
       "Usuário ou senha inválidos."
     );
+  }
+);
+
+Then(
+  "não consigo autenticar com mensagem no formulário solicitando email",
+  function () {
+    loginUser.clickLogin();
+    cy.get(loginUser.msgFormulario).contains("Informe o e-mail");
+  }
+);
+
+Then(
+  "não consigo autenticar com mensagem no formulário solicitando senha",
+  function () {
+    loginUser.clickLogin();
+    cy.get(loginUser.msgFormulario).contains("Informe a senha");
+  }
+);
+
+Then(
+  "não consigo autenticar com mensagem no formulário solicitando email e senha",
+  function () {
+    loginUser.clickLogin();
+    cy.get(loginUser.msgFormulario).eq(0).contains("Informe o e-mail");
+    cy.get(loginUser.msgFormulario).eq(1).contains("Informe a senha");
   }
 );

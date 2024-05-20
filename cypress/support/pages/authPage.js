@@ -6,6 +6,7 @@ export default class Login {
 
   msgFalha = ".modal-body";
   msgUsuarioInvalido = ".error-message";
+  msgFormulario = ".input-error";
 
   perfil = ".movies-page-link";
 

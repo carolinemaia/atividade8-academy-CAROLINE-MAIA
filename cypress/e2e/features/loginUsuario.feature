@@ -4,8 +4,7 @@ Funcionalidade: Login no site
     
     Contexto: Devo ter acessado a página para autenticar usuário cadastrado
         Dado que estou na página de Login
-        
-
+     
     Cenario: Deve ser possível autenticar com sucesso utilizando usuario cadastrado
         E tenho cadastro
         Quando informo e-mail cadastrado
@@ -13,8 +12,24 @@ Funcionalidade: Login no site
         E confirmo operação
         Entao consigo autenticar com sucesso no site
 
-    Cenário: Nao deve ser possível autenticar com usuario nao cadastrado
+    Cenário: Não deve ser possível autenticar com usuario nao cadastrado
         Quando informo e-mail nao cadastrado
         E informo senha
         E confirmo operação
-        Então nao consigo autenticar com mensagem informando usuário inválido 
+        Então nao consigo autenticar com mensagem informando usuário inválido
+
+    Cenário: Não deve ser possível autenticar sem informar o campo Email
+        Quando informo senha
+        E confirmo operação
+        Então não consigo autenticar com mensagem no formulário solicitando email
+
+    Cenário: Não deve ser possível autenticar sem informar o campo Senha
+        Quando informo e-mail cadastrado
+        E confirmo operação
+        Então não consigo autenticar com mensagem no formulário solicitando senha
+    
+    Cenário: Não deve ser possível autenticar sem informar os campos obrigatórios
+        Quando não informo e-mail
+        E não informo senha
+        E confirmo operação
+        Então não consigo autenticar com mensagem no formulário solicitando email e senha
