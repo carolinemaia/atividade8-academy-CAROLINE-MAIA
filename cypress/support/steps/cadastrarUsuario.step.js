@@ -66,10 +66,18 @@ When("concluo o cadastro com sucesso", function () {
   regisUser.registrarUsuario();
 });
 
+When(
+  "clico novamente para cadastrar com os dados do usuario recém cadastrado",
+  function () {
+    regisUser.clickCadastrar();
+  }
+);
+
 Then("o usuário será registrado com sucesso como tipo comum", function () {
   cy.wait("@post").then(function (intercept) {
     type = intercept.response.body.type;
     cy.wrap(type).should("eq", 0);
+    expect(intercept.response.statusCode).to.equal(201);
   });
 });
 
@@ -183,6 +191,8 @@ Then(
 );
 
 Then("o usuario está automaticamente logado no site", function () {
-  cy.wait("@auth");
+  cy.wait("@auth").then(function (intercept) {
+    expect(intercept.response.statusCode).to.equal(200);
+  });
   cy.get(regisUser.perfil).contains("Perfil");
 });

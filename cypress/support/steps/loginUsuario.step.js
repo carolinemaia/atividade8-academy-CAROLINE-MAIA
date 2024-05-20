@@ -24,11 +24,11 @@ Given("tenho cadastro", function () {
 });
 
 When("informo e-mail cadastrado", function () {
-  cy.get("[placeholder='E-mail']").type(dadoLoginEmail);
+  cy.get(loginUser.inputEmail).type(dadoLoginEmail);
 });
 
 When("informo senha", function () {
-  cy.get("[placeholder='Password']").type(dadoLoginSenha);
+  cy.get(loginUser.inputSenha).type(dadoLoginSenha);
 });
 
 When("confirmo operação", function () {
@@ -40,24 +40,27 @@ When("confirmo operação", function () {
 });
 
 When("informo e-mail nao cadastrado", function () {
-  cy.get("[placeholder='E-mail']").type(
-    "essemmailcomcertezanaoexiste123@hot.com"
-  );
+  cy.get(loginUser.inputEmail).type("essemmailcomcertezanaoexiste123@hot.com");
 });
 
 Then("consigo autenticar com sucesso no site", function () {
-  cy.wait("@auth");
+  cy.wait("@auth").then(function (intercept) {
+    expect(intercept.response.statusCode).to.equal(200);
 
-  cy.url().should(
-    "equal",
-    "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/"
-  );
+    cy.url().should(
+      "equal",
+      "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/"
+    );
+    cy.get(loginUser.perfil).contains("Perfil");
+  });
 });
 
 Then(
   "nao consigo autenticar com mensagem informando usuário inválido",
   function () {
-    cy.wait("@auth");
+    cy.wait("@auth").then(function (intercept) {
+      expect(intercept.response.statusCode).to.equal(401);
+    });
     cy.get(loginUser.msgFalha).contains("Falha ao autenticar");
     cy.get(loginUser.msgUsuarioInvalido).contains(
       "Usuário ou senha inválidos."

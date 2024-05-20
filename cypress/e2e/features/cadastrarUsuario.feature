@@ -20,9 +20,8 @@ Funcionalidade: Cadastrar novo usuário
         |      @        | 
         |     C. M.     |
         |     cAr01     | 
-        |     🫂        |
         |AsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAasdasdadsadasdadsadsasdfghjklos|
-
+        |     🫂        |
 
     Cenário: Nao deve ser possível registrar um usuário sem informar o nome
         Quando informo um email válido
@@ -119,6 +118,11 @@ Funcionalidade: Cadastrar novo usuário
         E confirmo a operação
         Então a operação de registro não poderá ser concluída alertando que o e-mail ja está cadastrado
         E o botao Ok deve retornar para o formulário
+
+    Cenário: Não deve ser possível registrar um usuário recém cadastrado
+        Quando concluo o cadastro com sucesso
+        E clico novamente para cadastrar com os dados do usuario recém cadastrado
+        Então a operação de registro não poderá ser concluída alertando que o e-mail ja está cadastrado
 
     Cenário: Deve ser possível está automaticamente logado após registro
         Quando concluo o cadastro com sucesso

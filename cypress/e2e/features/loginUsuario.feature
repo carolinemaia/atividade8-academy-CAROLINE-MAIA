@@ -6,12 +6,12 @@ Funcionalidade: Login no site
         Dado que estou na página de Login
         
 
-    # Cenario: Deve ser possível autenticar com sucesso utilizando usuario cadastrado
-    #         E tenho cadastro
-    #     Quando informo e-mail cadastrado
-    #     E informo senha
-    #     E confirmo operação
-    #     Entao consigo autenticar com sucesso no site
+    Cenario: Deve ser possível autenticar com sucesso utilizando usuario cadastrado
+        E tenho cadastro
+        Quando informo e-mail cadastrado
+        E informo senha
+        E confirmo operação
+        Entao consigo autenticar com sucesso no site
 
     Cenário: Nao deve ser possível autenticar com usuario nao cadastrado
         Quando informo e-mail nao cadastrado
