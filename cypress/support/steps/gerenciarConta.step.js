@@ -14,21 +14,13 @@ beforeEach(function () {
   });
 });
 
-Given("que estou na pagina inicial", function () {
-  cy.visit("/");
-});
-
-Given("que estou logado no site", function () {
+Given("que estou logado no site como usuario comum", function () {
   cy.visit("/");
   //cy.wait("@auth");
 });
 
 Given("acesso a tela de gerenciamento de Conta", function () {
   cy.get(gerenciar.linkGerenciar).click();
-});
-
-When("acesso o endereço do Perfil", function () {
-  cy.visit("/profile");
 });
 
 When("realizo a edição do nome", function () {
@@ -61,11 +53,24 @@ When("realizo a edição da senha principal e confirmação de senha", function 
   cy.get(gerenciar.inputConfirmarSenha).type(newSenha);
 });
 
-Then("devo ser direcionado para tela de Login", function () {
-  cy.get(gerenciar.headerLogin).contains("Login");
-  cy.get(gerenciar.headerLogin).contains("Entre com suas credenciais");
-  cy.get(".input-container").eq(0);
-  cy.get(".input-container").eq(1);
+When("altero a senha principal", function () {
+  newSenha = faker.internet.password(8);
+  cy.get(gerenciar.inputSenha).clear();
+  cy.get(gerenciar.inputSenha).type(newSenha);
+});
+
+When("nao confirmo a senha", function () {
+  //nao precisa implementar
+});
+
+When("altero a senha principal {string}", function (senha) {
+  cy.get(gerenciar.inputSenha).clear();
+  cy.get(gerenciar.inputSenha).type(senha);
+});
+
+When("confirmo a senha principal {string}", function (senha) {
+  cy.get(gerenciar.inputConfirmarSenha).clear();
+  cy.get(gerenciar.inputConfirmarSenha).type(senha);
 });
 
 Then("consigo visualizar meus dados", function () {
@@ -82,7 +87,9 @@ Then("consigo visualizar a opçao de Logout", function () {
   cy.get(gerenciar.linkLogout).should("be.visible");
 });
 
-Then("é possivel visualizar informaçoes do seu cadastro", function () {});
+Then("é possivel visualizar informaçoes do seu cadastro", function () {
+  //implementar
+});
 
 Then(
   "a operaçao é finalizada com mensagem de informações atualizadas com sucesso",
@@ -105,3 +112,35 @@ Then("o botao Ok deve retornar para o formulário", function () {
   cy.get(gerenciar.campoFormulario).eq(3).should("be.visible");
   cy.get(gerenciar.campoFormulario).eq(4).should("be.visible");
 });
+
+Then("o campo de alterar usuario nao deve estar disponível", function () {
+  cy.get(gerenciar.campoTipoUsuario).eq(2).should("be.disabled");
+});
+
+Then("o campo de alterar email não deve estar disponível", function () {
+  cy.get(gerenciar.inputEmail).should("be.disabled");
+});
+
+Then(
+  "o site verifica que o campo Confirmar senha está limpo com alerta no formulario",
+  function () {
+    cy.get(gerenciar.inputConfirmarSenha).invoke("val").should("be.empty");
+    cy.get(gerenciar.msgFormulario).contains("As senhas devem ser iguais.");
+  }
+);
+
+Then(
+  "a operação de registro não poderá ser concluida com alerta no formulario informando quantidade minima",
+  function () {
+    cy.get(gerenciar.msgFormulario).contains(
+      "A senha deve ter pelo menos 6 dígitos"
+    );
+  }
+);
+
+Then(
+  "a operação de registro não poderá ser concluida com alerta no formulario informando quantidade máxima",
+  function () {
+    cy.contains("A senha deve ter no máximo 12 dígitos.");
+  }
+);

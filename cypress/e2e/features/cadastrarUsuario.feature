@@ -62,7 +62,7 @@ Funcionalidade: Cadastrar novo usuário
         E informo uma senha válida
         E informo uma senha divergente "<senha>"
         E confirmo a operação
-        Então a operação de registro não poderá ser concluida com alerta "<alerta>"
+        Então a operação de registro não poderá ser concluida com alerta no formulario "<alerta>"
         Exemplos:
         |     senha     |               alerta                   |
         |     12345     | A senha deve ter pelo menos 6 dígitos. |

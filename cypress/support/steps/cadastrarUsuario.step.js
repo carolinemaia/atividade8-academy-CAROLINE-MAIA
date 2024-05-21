@@ -141,7 +141,7 @@ Then("o site alerta sobre os campos obrigatórios", function () {
 });
 
 Then(
-  "a operação de registro não poderá ser concluida com alerta {string}",
+  "a operação de registro não poderá ser concluida com alerta no formulario {string}",
   function (alerta) {
     cy.get(regisUser.msgErro).contains(alerta);
   }

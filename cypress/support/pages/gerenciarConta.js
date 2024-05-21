@@ -19,9 +19,11 @@ export default class GerenciarConta {
   linkGerenciar = "[href='/account']";
   linkLogout = "[href='/logout']";
   campoFormulario = ".input-container";
+  campoTipoUsuario = ".profile-input";
 
   msgSucesso = ".modal-body > h3";
   msgAtualizacao = ".error-message";
+  msgFormulario = ".input-error";
 
   clickSalvar() {
     cy.get(this.buttonSalvar).click();
