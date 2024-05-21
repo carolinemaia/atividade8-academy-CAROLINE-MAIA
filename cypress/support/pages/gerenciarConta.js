@@ -9,6 +9,7 @@ export default class GerenciarConta {
   buttonCadastrar = ".account-save-button";
   buttonOk = ".modal-actions";
   buttonSalvar = ".account-save-button";
+  buttonAlterarSenha = ".account-password-button";
 
   perfil = "[href='/profile']";
   headerLogin = ".login-content-header";
@@ -17,6 +18,8 @@ export default class GerenciarConta {
   userInfo = ".user-info";
   linkGerenciar = "[href='/account']";
   linkLogout = "[href='/logout']";
+  campoFormulario = ".input-container";
+
   msgSucesso = ".modal-body > h3";
   msgAtualizacao = ".error-message";
 
@@ -26,6 +29,10 @@ export default class GerenciarConta {
 
   clickOK() {
     cy.get(this.buttonOk).click();
+  }
+
+  clickAlterarSenha() {
+    cy.get(this.buttonAlterarSenha).click();
   }
 
   // funcao criar usuario pra logar no site automaticamente

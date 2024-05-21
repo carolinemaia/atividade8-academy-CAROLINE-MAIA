@@ -1,19 +1,24 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import GerenciarConta from "../pages/gerenciarConta";
+import { faker } from "@faker-js/faker";
 
 const gerenciar = new GerenciarConta();
-var newName = "CMN";
 var idUser;
+var newName;
+var newSenha;
+
+beforeEach(function () {
+  gerenciar.logarSite();
+  cy.wait("@post").then(function (intercept) {
+    idUser = intercept.response.body.id;
+  });
+});
 
 Given("que estou na pagina inicial", function () {
   cy.visit("/");
 });
 
-Given("que realizei login no site", function () {
-  gerenciar.logarSite();
-  cy.wait("@post").then(function (intercept) {
-    idUser = intercept.response.body.id;
-  });
+Given("que estou logado no site", function () {
   cy.visit("/");
   //cy.wait("@auth");
 });
@@ -27,11 +32,11 @@ When("acesso o endereço do Perfil", function () {
 });
 
 When("realizo a edição do nome", function () {
+  newName = faker.person.fullName();
   cy.get(gerenciar.inputNome).clear();
   cy.get(gerenciar.inputNome).type(newName);
 });
 
-//interceptar essa operacao, como epgar o id do usuario?
 When("confirmo a operação", function () {
   cy.intercept(
     "PUT",
@@ -40,15 +45,27 @@ When("confirmo a operação", function () {
   gerenciar.clickSalvar();
 });
 
-Then("o usuario é direcionado para tela de Login", function () {
+When("acesso a tela de Perfil", function () {
+  cy.get(gerenciar.perfil).click();
+});
+
+When("clico em Alterar Senha", function () {
+  gerenciar.clickAlterarSenha();
+});
+
+When("realizo a edição da senha principal e confirmação de senha", function () {
+  newSenha = faker.internet.password(8);
+  cy.get(gerenciar.inputSenha).clear();
+  cy.get(gerenciar.inputSenha).type(newSenha);
+  cy.get(gerenciar.inputConfirmarSenha).clear();
+  cy.get(gerenciar.inputConfirmarSenha).type(newSenha);
+});
+
+Then("devo ser direcionado para tela de Login", function () {
   cy.get(gerenciar.headerLogin).contains("Login");
   cy.get(gerenciar.headerLogin).contains("Entre com suas credenciais");
   cy.get(".input-container").eq(0);
   cy.get(".input-container").eq(1);
-});
-
-When("acesso a tela de Perfil", function () {
-  cy.get(gerenciar.perfil).click();
 });
 
 Then("consigo visualizar meus dados", function () {
@@ -77,5 +94,14 @@ Then(
 
 Then("ao clicar OK o nome deve está atualizado", function () {
   gerenciar.clickOK();
-  cy.get("[placeholder='Nome']").invoke("text").should("contain", newName);
+  cy.get(gerenciar.inputNome).should("have.value", newName);
+});
+
+Then("o botao Ok deve retornar para o formulário", function () {
+  gerenciar.clickOK();
+  cy.get(gerenciar.campoFormulario).eq(0).should("be.visible");
+  cy.get(gerenciar.campoFormulario).eq(1).should("be.visible");
+  cy.get(gerenciar.campoFormulario).eq(2).should("be.visible");
+  cy.get(gerenciar.campoFormulario).eq(3).should("be.visible");
+  cy.get(gerenciar.campoFormulario).eq(4).should("be.visible");
 });

@@ -177,8 +177,9 @@ Then(
 );
 
 Then("o botao Ok deve retornar para o formulário", function () {
+  //verificar se nao vai quebrar
   regisUser.clickOk();
-  cy.get(regisUser.campoForms).should("be.visible");
+  cy.get(regisUser.campoForms).eq(0).should("be.visible");
   cy.get(regisUser.campoForms).eq(1).should("be.visible");
   cy.get(regisUser.campoForms).eq(2).should("be.visible");
   cy.get(regisUser.campoForms).eq(3).should("be.visible");
