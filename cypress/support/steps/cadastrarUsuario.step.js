@@ -43,6 +43,19 @@ When("informo uma senha divergente {string}", function (senha) {
   regisUser.typeConfirmarSenhaDivergente(senha);
 });
 
+When("não informo nome", function () {
+  cy.get(regisUser.inputNome).invoke("val").should("be.empty");
+});
+
+When("não informo o email", function () {
+  cy.get(regisUser.inputEmail).invoke("val").should("be.empty");
+});
+
+When("não informo os campos de senha", function () {
+  cy.get(regisUser.inputSenha).invoke("val").should("be.empty");
+  cy.get(regisUser.inputConfirmarSenha).invoke("val").should("be.empty");
+});
+
 When("confirmo a operação", function () {
   cy.intercept(
     "POST",
@@ -121,16 +134,9 @@ Then(
 );
 
 Then("o site alerta sobre os campos obrigatórios", function () {
-  cy.get(regisUser.typeNome).invoke("val").should("be.empty");
   cy.get(regisUser.msgErro).eq(0).contains("Informe o nome");
-
-  cy.get(regisUser.typeNome).invoke("val").should("be.empty");
   cy.get(regisUser.msgErro).eq(1).contains("Informe o e-mail");
-
-  cy.get(regisUser.typeSenhaValida).invoke("val").should("be.empty");
   cy.get(regisUser.msgErro).eq(2).contains("Informe a senha");
-
-  cy.get(regisUser.typeConfirmarSenhaValida).invoke("val").should("be.empty");
   cy.get(regisUser.msgErro).eq(3).contains("Informe a senha");
 });
 

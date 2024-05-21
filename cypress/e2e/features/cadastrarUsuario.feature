@@ -20,7 +20,6 @@ Funcionalidade: Cadastrar novo usuário
         |      @        | 
         |     C. M.     |
         |     cAr01     | 
-        |AsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAsdadsaAasdasdadsadasdadsadsasdfghjklos|
         |     🫂        |
 
     Cenário: Nao deve ser possível registrar um usuário sem informar o nome
@@ -51,6 +50,9 @@ Funcionalidade: Cadastrar novo usuário
         Entao o site verifica que o campo Confirmar senha está limpo alertando para informar a senha
     
     Cenário: Nao deve ser possível registrar um usuario sem informar os dados nos campos obrigatórios
+        Quando não informo nome
+        E não informo o email
+        E não informo os campos de senha
         Quando confirmo a operação
         Entao o site alerta sobre os campos obrigatórios
 
