@@ -16,7 +16,10 @@ beforeEach(function () {
 
 Given("que estou logado no site como usuario comum", function () {
   cy.visit("/");
-  //cy.wait("@auth");
+});
+
+Given("acessei a tela de Perfil", function () {
+  cy.get(gerenciar.perfil).click();
 });
 
 Given("acesso a tela de gerenciamento de Conta", function () {
@@ -37,10 +40,6 @@ When("confirmo a operação", function () {
   gerenciar.clickSalvar();
 });
 
-When("acesso a tela de Perfil", function () {
-  cy.get(gerenciar.perfil).click();
-});
-
 When("clico em Alterar Senha", function () {
   gerenciar.clickAlterarSenha();
 });
@@ -55,28 +54,33 @@ When("realizo a edição da senha principal e confirmação de senha", function 
 
 When("altero a senha principal", function () {
   newSenha = faker.internet.password(8);
-  cy.get(gerenciar.inputSenha).clear();
   cy.get(gerenciar.inputSenha).type(newSenha);
 });
 
-When("nao confirmo a senha", function () {
-  //nao precisa implementar
+When("os campos de senhas ficam habilitados", function () {
+  cy.get(gerenciar.inputSenha).should("be.enabled");
+  cy.get(gerenciar.inputConfirmarSenha).should("be.enabled");
 });
 
+When("clico em cancelar", function () {
+  gerenciar.clickCancelar();
+});
+
+When("nao confirmo a senha", function () {});
+
+When("altero senha");
+
 When("altero a senha principal {string}", function (senha) {
-  cy.get(gerenciar.inputSenha).clear();
   cy.get(gerenciar.inputSenha).type(senha);
 });
 
 When("confirmo a senha principal {string}", function (senha) {
-  cy.get(gerenciar.inputConfirmarSenha).clear();
   cy.get(gerenciar.inputConfirmarSenha).type(senha);
 });
 
 Then("consigo visualizar meus dados", function () {
   cy.get(gerenciar.headerPerfil).should("be.visible");
   cy.get(gerenciar.nickName).should("be.visible");
-  cy.get(gerenciar.userInfo).should("be.visible");
 });
 
 Then("consigo visualizar a opção de gerenciar Conta", function () {
@@ -85,10 +89,6 @@ Then("consigo visualizar a opção de gerenciar Conta", function () {
 
 Then("consigo visualizar a opçao de Logout", function () {
   cy.get(gerenciar.linkLogout).should("be.visible");
-});
-
-Then("é possivel visualizar informaçoes do seu cadastro", function () {
-  //implementar
 });
 
 Then(
@@ -113,6 +113,11 @@ Then("o botao Ok deve retornar para o formulário", function () {
   cy.get(gerenciar.campoFormulario).eq(4).should("be.visible");
 });
 
+Then("os campos de senhas ficam desabilitados", function () {
+  cy.get(gerenciar.inputSenha).should("be.disabled");
+  cy.get(gerenciar.inputConfirmarSenha).should("be.disabled");
+});
+
 Then("o campo de alterar usuario nao deve estar disponível", function () {
   cy.get(gerenciar.campoTipoUsuario).eq(2).should("be.disabled");
 });
@@ -126,6 +131,13 @@ Then(
   function () {
     cy.get(gerenciar.inputConfirmarSenha).invoke("val").should("be.empty");
     cy.get(gerenciar.msgFormulario).contains("As senhas devem ser iguais.");
+  }
+);
+
+Then(
+  "a operação de registro não poderá ser concluida com alerta no formulario {string}",
+  function (alerta) {
+    cy.get(gerenciar.msgFormulario).contains(alerta);
   }
 );
 

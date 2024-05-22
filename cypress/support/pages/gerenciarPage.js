@@ -10,6 +10,7 @@ export default class GerenciarConta {
   buttonOk = ".modal-actions";
   buttonSalvar = ".account-save-button";
   buttonAlterarSenha = ".account-password-button";
+  buttonCancelar = ".account-password-button-cancel";
 
   perfil = "[href='/profile']";
   headerLogin = ".login-content-header";
@@ -37,15 +38,20 @@ export default class GerenciarConta {
     cy.get(this.buttonAlterarSenha).click();
   }
 
+  clickCancelar() {
+    cy.get(this.buttonCancelar).click();
+  }
+
   // funcao criar usuario pra logar no site automaticamente
   logarSite() {
+    var emailUser = fakerPT_BR.internet.email();
     cy.visit("/register");
     cy.intercept(
       "POST",
       "https://raromdb-3c39614e42d4.herokuapp.com/api/users"
     ).as("post");
     cy.get(this.inputNome).type("Caroline Maia");
-    cy.get(this.inputEmail).type(fakerPT_BR.internet.email());
+    cy.get(this.inputEmail).type(emailUser);
     cy.get(this.inputSenha).type("123456");
     cy.get(this.inputConfirmarSenha).type("123456");
     cy.intercept(
