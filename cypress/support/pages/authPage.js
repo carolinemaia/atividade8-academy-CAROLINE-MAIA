@@ -3,6 +3,7 @@ export default class Login {
   inputSenha = "[placeholder='Password']";
 
   buttonLogin = ".login-button";
+  buttonOk = ".modal-actions";
 
   msgFalha = ".modal-body";
   msgUsuarioInvalido = ".error-message";
@@ -20,5 +21,9 @@ export default class Login {
 
   clickLogin() {
     cy.get(this.buttonLogin).click();
+  }
+
+  clickOK() {
+    cy.get(this.buttonOk).click();
   }
 }

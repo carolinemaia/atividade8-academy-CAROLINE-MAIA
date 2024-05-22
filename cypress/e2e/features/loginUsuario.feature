@@ -17,14 +17,17 @@ Funcionalidade: Login no site
         E informo senha
         E confirmo operação
         Então nao consigo autenticar com mensagem informando usuário inválido
+        E o botao Ok deve retornar para o formulário
 
     Cenário: Não deve ser possível autenticar sem informar o campo Email
+        E não informo e-mail
         Quando informo senha
         E confirmo operação
         Então não consigo autenticar com mensagem no formulário solicitando email
 
     Cenário: Não deve ser possível autenticar sem informar o campo Senha
         Quando informo e-mail cadastrado
+        E não informo senha
         E confirmo operação
         Então não consigo autenticar com mensagem no formulário solicitando senha
     

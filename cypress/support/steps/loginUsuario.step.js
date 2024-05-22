@@ -24,11 +24,11 @@ Given("tenho cadastro", function () {
 });
 
 When("informo e-mail cadastrado", function () {
-  cy.get(loginUser.inputEmail).type(dadoLoginEmail);
+  loginUser.typeEmail(dadoLoginEmail);
 });
 
 When("informo senha", function () {
-  cy.get(loginUser.inputSenha).type(dadoLoginSenha);
+  loginUser.typeSenha(dadoLoginSenha);
 });
 
 When("confirmo operação", function () {
@@ -40,7 +40,7 @@ When("confirmo operação", function () {
 });
 
 When("informo e-mail nao cadastrado", function () {
-  cy.get(loginUser.inputEmail).type("essemmailcomcertezanaoexiste123@hot.com");
+  loginUser.typeEmail("essemmailcomcertezanaoexiste123@hot.com");
 });
 
 When("não informo e-mail", function () {
@@ -100,3 +100,9 @@ Then(
     cy.get(loginUser.msgFormulario).eq(1).contains("Informe a senha");
   }
 );
+
+Then("o botao Ok deve retornar para o formulário", function () {
+  loginUser.clickOK();
+  cy.get(loginUser.inputEmail).should("be.visible");
+  cy.get(loginUser.inputSenha).should("be.visible");
+});
