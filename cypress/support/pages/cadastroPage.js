@@ -54,10 +54,6 @@ export default class CadastroPage {
   }
 
   registrarUsuario() {
-    cy.intercept(
-      "POST",
-      "https://raromdb-3c39614e42d4.herokuapp.com/api/users"
-    ).as("post");
     cy.get(this.inputNome).type("Caroline Maia");
     cy.get(this.inputEmail).type(fakerPT_BR.internet.email());
     cy.get(this.inputSenha).type("123456");

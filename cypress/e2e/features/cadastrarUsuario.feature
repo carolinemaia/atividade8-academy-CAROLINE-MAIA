@@ -60,7 +60,7 @@ Funcionalidade: Cadastrar novo usuário
         Quando informo um Nome
         E informo um email válido
         E informo uma senha válida
-        E informo uma senha divergente "<senha>"
+        E informo uma senha divergente da principal "<senha>"
         E confirmo a operação
         Então a operação de registro não poderá ser concluida com alerta no formulario "<alerta>"
         Exemplos:
@@ -125,6 +125,7 @@ Funcionalidade: Cadastrar novo usuário
         Quando concluo o cadastro com sucesso
         E clico novamente para cadastrar com os dados do usuario recém cadastrado
         Então a operação de registro não poderá ser concluída alertando que o e-mail ja está cadastrado
+        E o botao Ok deve retornar para o formulário
 
     Cenário: Deve ser possível está automaticamente logado após registro
         Quando concluo o cadastro com sucesso

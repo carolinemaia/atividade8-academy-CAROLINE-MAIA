@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import GerenciarConta from "../pages/gerenciarConta";
+import GerenciarConta from "../pages/gerenciarPage";
 import { faker } from "@faker-js/faker";
 
 const gerenciar = new GerenciarConta();
